@@ -1,0 +1,13 @@
+node_modules/
+__pycache__/
+*.pyc
+mediamtx.generated.yml
+*service-account*.json
+outputs/
+dist/
+.DS_Store
+*.tar.gz
+*.zip
+.env
+.env.*
+.openai/.local/

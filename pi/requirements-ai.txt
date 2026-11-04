@@ -1,0 +1,2 @@
+# Install in a venv with --system-site-packages; Picamera2/OpenCV come from apt.
+mediapipe>=0.10.20,<0.11

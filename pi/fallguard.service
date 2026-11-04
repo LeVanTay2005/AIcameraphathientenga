@@ -1,0 +1,19 @@
+[Unit]
+Description=FallGuard Picamera2 video and event service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/fallguard/pi
+EnvironmentFile=/home/pi/fallguard/pi/.env
+ExecStart=/home/pi/fallguard/.venv/bin/python /home/pi/fallguard/pi/agent.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+UMask=0077
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

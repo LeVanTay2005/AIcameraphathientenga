@@ -1,0 +1,13 @@
+# Replace the hostname. Route DNS/networking to this Pi or use an HTTPS tunnel.
+# This file does not configure Internet routing or bypass CGNAT automatically.
+camera.your-domain.example {
+    respond /internal/* 404
+    reverse_proxy 127.0.0.1:8000
+    header Referrer-Policy "no-referrer"
+    # Do not enable access logs containing the signed HLS session query.
+}
+
+# Use a separate hostname so WHEP Location/ICE URLs are not broken by subpaths.
+rtc.your-domain.example {
+    reverse_proxy 127.0.0.1:8889
+}

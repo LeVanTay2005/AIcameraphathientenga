@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/pushTokens/{tokenId} {
+      allow read, delete: if request.auth != null && request.auth.uid == userId
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+      allow create, update: if request.auth != null && request.auth.uid == userId
+        && request.auth.token.firebase.sign_in_provider != 'anonymous'
+        && request.resource.data.keys().hasOnly(['token', 'updatedAt'])
+        && request.resource.data.token is string
+        && request.resource.data.token.size() > 0
+        && request.resource.data.token.size() < 4096
+        && request.resource.data.updatedAt == request.time;
+    }
+    match /users/{userId}/cameras/{cameraId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+    match /users/{userId}/events/{eventId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

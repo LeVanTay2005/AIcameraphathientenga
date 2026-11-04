@@ -1,0 +1,10 @@
+import {cp,mkdir,rm} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {resolve,dirname} from 'node:path';
+const root=resolve(fileURLToPath(new URL('.',import.meta.url)));
+const destination=resolve(root,'dist');
+if(dirname(destination)!==root)throw Error('Build output must remain inside project');
+await rm(destination,{recursive:true,force:true});
+await mkdir(destination,{recursive:true});
+await cp(resolve(root,'public'),destination,{recursive:true});
+console.log('Static app built in dist/');
